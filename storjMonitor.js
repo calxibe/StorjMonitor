@@ -19,47 +19,45 @@ console.log = function () {
         var minutes = date.getMinutes();
         var seconds = date.getSeconds();
         var milliseconds = date.getMilliseconds();
-
-        return '[' +
-               ((hour < 10) ? '0' + hour: hour) + ':' +
-               ((minutes < 10) ? '0' + minutes: minutes) + ':' +
-               ((seconds < 10) ? '0' + seconds: seconds) + '] ';
+        return '[' + ((hour < 10) ? '0' + hour: hour) + ':' + ((minutes < 10) ? '0' + minutes: minutes) + ':' + ((seconds < 10) ? '0' + seconds: seconds) + '] ';
     }
 
     log.apply(console, [formatConsoleDate(new Date()) + first_parameter].concat(other_parameters));
 };
 
-function fSubmitData() {
+function fParseNodes() {
 	const daemon = dnode.connect(45015);
 
-	var options;
 	daemon.on('remote', (rpc) => {
-	  rpc.status(function(err, shares) {
-		shares.forEach((share) => {
-			console.log(share.id + ' | Submit to Storjstat');
-			//console.log(share.id+'\n'+JSON.stringify(share.meta, null, 4));
-			
-			requestify.post('https://storjstat.com:3000/clientnode?token=' + token + '&nodeID=' + share.id, share.meta)
-				.then(function(response) {
-					var obj = response.getBody();
-					if (obj.saved == true) {
-						console.log(share.id + ' | Success');
-					} else {
-						console.log(share.id + ' | Error');
-					}
-				})
-				.fail(function(response) {
-					console.log('ERROR ' + JSON.stringify(response.getBody()));
-				});
-
+		rpc.status(function(err, shares) {
+			daemon.end();
+			shares.forEach((share) => {
+				console.log(share.id + ' | Submit to Storjstat');
+				fSubmitData(share.id, share.meta);
+			});
 		});
-	   daemon.end();
-	  });
+	}).on('fail',function(err){
+		console.log('Error in protocol layer, try restaring StorjMonitor...');
+		console.log(err);
 	}).on('error',function(err){
-	    //console.log(err);
-	    console.log('Error connecting to Storj app, are you sure its running?');
-	});
+		console.log('Error connecting to StorjShare Client, are you sure its running?');
+		console.log(err);
+	});		
 }
 
-setInterval(function(){ fSubmitData(); }, 900000);
-fSubmitData();
+function fSubmitData(nodeId,meta) {
+	requestify.post('https://storjstat.com:3000/clientnode?token=' + token + '&nodeID=' + nodeId, meta)
+		.then(function(response) {
+			var obj = response.getBody();
+			if (obj.saved == true) {
+				console.log(nodeId + ' | Success');
+			} else {
+				console.log(nodeId + ' | Error');
+			}
+		}).fail(function(response) {
+			console.log('ERROR ' + JSON.stringify(response.getBody()));
+		});
+}
+
+setInterval(function(){ fParseNodes(); }, 900000);
+fParseNodes();

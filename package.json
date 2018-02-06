@@ -1,0 +1,25 @@
+{
+    "name": "StorjMonitor",
+    "preferGlobal": true,
+    "version": "0.0.1",
+    "author": "calxibe <steinar@calxibe.com>",
+    "description": "Node.js script for publishing data from local Storj nodes to Storjstat.com",
+    "license": "?",
+    "engines": {
+        "node": ">=0.10"
+    },
+    "scripts": {
+        "start": "node ./storjMonitor.js"
+    },
+    "dependencies": {
+        "bindings": "1.2.1",
+        "dnode": "1.2.2",
+        "dnode-protocol": "0.2.2",
+        "jquery": "3.1.0",
+        "q": "0.9.7",
+        "requestify": "0.2.5",
+        "traverse": "0.6.6",
+        "underscore": "1.8.3",
+        "weak": "1.0.1"
+    }
+}

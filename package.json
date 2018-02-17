@@ -4,7 +4,12 @@
     "version": "0.0.1",
     "author": "calxibe <steinar@calxibe.com>",
     "description": "Node.js script for publishing data from local Storj nodes to Storjstat.com",
-    "license": "?",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/calxibe/StorjMonitor.git"
+    },
+    "private": true,
+    "license": "UNLICENSED",
     "engines": {
         "node": ">=0.10"
     },

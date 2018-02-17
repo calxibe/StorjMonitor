@@ -1,1 +1,1 @@
-/usr/bin/node storjMonitor.js
+node storjMonitor.js

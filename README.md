@@ -1,5 +1,5 @@
 # StorjMonitor
-Node.js script for publishing data from local Storj nodes to Storjstat.com
+Node.js script for publishing data from local Storj nodes to https://Storjstat.com
 
 
 # Install Instructions

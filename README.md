@@ -16,3 +16,11 @@ The monitor can easily be started by running "storjMonitor.bat", by download the
 4. Run the Script! `./storjMonitor-install.sh`
 5. Enter your API Key from the website into the line 10 in storjMonitor.js (var token = "YOUR-TOKEN-HERE").
 6. Execute the Monitor Script. `./storjMonitor.sh` or via seperate screen `screen dmS StorjMonitor ./storjMonitor.sh`
+
+## Troubleshooting
+
+In case the Linux Install Script is throwing issues you may need to install some dependencies first:
+```
+sudo apt-get install -y nodejs-legacy
+sudo apt-get install -y build-essential
+```

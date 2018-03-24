@@ -29,9 +29,7 @@ The monitor can easily be started by running "storjMonitor.bat", by download the
 If Storj daemon is running also on a docker, the simplest is to make a link at
 run time. (let's say that the container of Storj Daemon is `MyStorjContainer`):
 
-```
-docker run -e TOKEN=MY-TOKEN --link MyStorjContainer:storj --name StorjMonitor calxibe/StorjMonitor:latest
-```
+`docker run -e TOKEN=MY-TOKEN --link MyStorjContainer:storj --name StorjMonitor calxibe/StorjMonitor:latest`
 
 ## Troubleshooting
 

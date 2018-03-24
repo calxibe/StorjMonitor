@@ -5,9 +5,11 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 const dnode = require('dnode');
 const http = require('http');
-const requestify = require('requestify'); 
+const requestify = require('requestify');
 
 var token = "YOUR-TOKEN-HERE"; //api token can be create under "Nodes" -> "API-Key"
+var daemon_host= "127.0.0.1"; //where the storj daemon is running
+var daemon_port= 45015; //on which port storj daemon is listening
 var log = console.log;
 
 console.log = function () {
@@ -26,7 +28,7 @@ console.log = function () {
 };
 
 function fParseNodes() {
-	const daemon = dnode.connect(45015);
+	const daemon = dnode.connect(daemon_host, daemon_port);
 
 	daemon.on('remote', (rpc) => {
 		rpc.status(function(err, shares) {
@@ -42,7 +44,7 @@ function fParseNodes() {
 	}).on('error',function(err){
 		console.log('Error connecting to StorjShare Client, are you sure its running?');
 		console.log(err);
-	});		
+	});
 }
 
 function fSubmitData(nodeId,meta) {

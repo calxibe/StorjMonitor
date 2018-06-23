@@ -7,7 +7,7 @@ const dnode = require('dnode');
 const http = require('http');
 const requestify = require('requestify');
 
-var token = "YOUR-TOKEN-HERE"; //api token can be create under "Nodes" -> "API-Key"
+var token = "YOUR-TOKEN-HERE"; //api token can be create under "Nodes" -> "yNN11U4S5G4mfJU5JJFFBWXGSIjsHb7IFC12ENh"
 var daemon_host= "127.0.0.1"; //where the storj daemon is running
 var daemon_port= 45015; //on which port storj daemon is listening
 var log = console.log;

@@ -17,6 +17,20 @@ The monitor can easily be started by running "storjMonitor.bat", by download the
 5. Enter your API Key from the website into the line 10 in storjMonitor.js (var token = "YOUR-TOKEN-HERE").
 6. Execute the Monitor Script. `./storjMonitor.sh` or via seperate screen `screen -dmS StorjMonitor ./storjMonitor.sh`
 
+## Docker
+
+1. Pull the Docker image from docker hub. `docker pull calxibe/StorjMonitor`
+2. Run the Docker container.`docker run -e TOKEN=MY-TOKEN -e STORJ_DAEMON=1.2.3.4 --name StorjMonitor calxibe/StorjMonitor`
+   * 3 variables exists:
+     * `TOKEN`: the API key from the website
+     * `STORJ_DAEMON`: the host of Storj daemon (`storj` per default)
+     * `STORJ_PORT`: the port of Storj daemon (`45015` per default)
+
+If Storj daemon is running also on a docker, the simplest is to make a link at
+run time. (let's say that the container of Storj Daemon is `MyStorjContainer`):
+
+`docker run -e TOKEN=MY-TOKEN --link MyStorjContainer:storj --name StorjMonitor calxibe/StorjMonitor:latest`
+
 ## Troubleshooting
 
 In case the Linux Install Script is throwing issues you may need to install some dependencies first:

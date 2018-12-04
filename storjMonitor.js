@@ -28,38 +28,37 @@ console.log = function () {
 };
 
 function fParseNodes() {
-	const daemon = dnode.connect(daemon_host, daemon_port);
+  const daemon = dnode.connect(daemon_host, daemon_port);
 
-	daemon.on('remote', (rpc) => {
-		rpc.status(function(err, shares) {
-			daemon.end();
-			shares.forEach((share) => {
-				console.log(share.id + ' | Submit to Storjstat');
-				fSubmitData(share.id, share.meta);
-			});
-		});
-	}).on('fail',function(err){
-		console.log('Error in protocol layer, try restaring StorjMonitor...');
-		console.log(err);
-	}).on('error',function(err){
-		console.log('Error connecting to StorjShare Client, are you sure its running?');
-		console.log(err);
-	});
+  daemon.on('remote', (rpc) => {
+    rpc.status(function(err, shares) {
+      daemon.end();
+      shares.forEach((share) => {
+        console.log(share.id + ' | Submit to Storjstat');
+        fSubmitData(share.id, share.meta);
+      });
+    });
+  }).on('fail',function(err){
+    console.log('Error in protocol layer, try restaring StorjMonitor...');
+    console.log(err);
+  }).on('error',function(err){
+    console.log('Error connecting to StorjShare Client, are you sure its running?');
+    console.log(err);
+  });
 }
 
 function fSubmitData(nodeId,meta) {
-	requestify.post('https://storjstat.com:3000/clientnode?token=' + token + '&nodeID=' + nodeId, meta)
-		.then(function(response) {
-			var obj = response.getBody();
-			if (obj.saved == true) {
-				console.log(nodeId + ' | Success');
-			} else {
-				console.log(nodeId + ' | Error');
-			}
-		}).fail(function(response) {
-			console.log('ERROR ' + JSON.stringify(response.getBody()));
-		});
+  requestify.post('https://storjstat.com:3000/clientnode?token=' + token + '&nodeID=' + nodeId, meta)
+    .then(function(response) {
+      var obj = response.getBody();
+      if (obj.saved == true) {
+        console.log(nodeId + ' | Success');
+      } else {
+        console.log(nodeId + ' | Error');
+      }
+    }).fail(function(response) {
+      console.log('ERROR ' + JSON.stringify(response.getBody()));
+    });
 }
 
-setInterval(function(){ fParseNodes(); }, 900000);
 fParseNodes();

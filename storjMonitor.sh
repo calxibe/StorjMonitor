@@ -1,1 +1,1 @@
-node storjMonitor.js
+while true; do node storjMonitor.js; sleep 900; done
